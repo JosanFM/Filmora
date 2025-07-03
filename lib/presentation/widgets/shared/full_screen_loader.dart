@@ -11,7 +11,7 @@ class FullScreenLoader extends StatelessWidget {
       'Echando la cervecita...🍻',
       'Enviando a mi acompañante por palomitas...🍿',
       'Negociando con el Wi-Fi...📶',
-      'Esta tardando más de lo esperado 🙄',
+      'Tardando más de lo esperado 🙄',
     ];
     return Stream.periodic(const Duration(milliseconds: 1600), (step){
       return messages [step];

@@ -1,11 +1,14 @@
-import 'package:filmora/presentation/providers/movies/movies_providers.dart';
+
+
+import 'package:filmora/presentation/providers/providers.dart';
+import 'package:filmora/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 
-class HomeScreen extends StatelessWidget {
 
+class HomeScreen extends StatelessWidget {
   static const name = '/home-screen';
 
   const HomeScreen({super.key});
@@ -13,10 +16,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:  _HomeView(),
+      body: _HomeView(),
+      //Lo creo en shared
+      bottomNavigationBar: CustomBottonNavigation(),
     );
   }
 }
+
+
+
+
 
 class _HomeView extends ConsumerStatefulWidget {
   const _HomeView();
@@ -26,14 +35,11 @@ class _HomeView extends ConsumerStatefulWidget {
 }
 
 class _HomeViewState extends ConsumerState<_HomeView> {
-
   @override
   void initState() {
     super.initState();
-
     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
   }
-
 
   @override
   void dispose() {
@@ -41,20 +47,20 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
 
-    final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    //final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    final slideShowMovies = ref.watch(moviesSlideshowProvider);
 
-    return ListView.builder(
-      itemCount: nowPlayingMovies.length,
-      itemBuilder: (context, index){
-        final movie = nowPlayingMovies[index];
-        return ListTile(
-          title: Text(movie.title),
-        );
-      },
+    return Column(
+      children: [
+        CustomAppbar(),
+        
+        MoviesSlidesshow(movies: slideShowMovies)
+        
+      
+      ],
     );
   }
 }

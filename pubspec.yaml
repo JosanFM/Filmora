@@ -27,3 +27,4 @@ flutter:
 
   assets:
     - .env
+    - assets/background2.png

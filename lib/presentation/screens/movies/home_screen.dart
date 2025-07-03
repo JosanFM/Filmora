@@ -2,6 +2,7 @@ import 'package:filmora/presentation/providers/providers.dart';
 import 'package:filmora/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:filmora/presentation/providers/movies/initial_loading_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   static const name = '/home-screen';
@@ -39,6 +40,10 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
   @override
   Widget build(BuildContext context) {
+
+    final initialLoading = ref.watch(initialLoadingProvider);
+    if ( initialLoading == true ) return const FullScreenLoader();
+
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final slideShowMovies = ref.watch(moviesSlideshowProvider);
     final popularMovies = ref.watch(popularMoviesProvider);
@@ -46,7 +51,7 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
     
 
-    return FullScreenLoader();
+
     
     // SIngleChildScrollView ( si no queremos que el buscador de arriba se mueva con el scroll y cambiar el slivers por el child) (con el sliver todos los widgets son SliverAppbar o lo que sea)
     return CustomScrollView(

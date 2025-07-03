@@ -13,7 +13,7 @@ class FullScreenLoader extends StatelessWidget {
       'Negociando con el Wi-Fi...📶',
       'Tardando más de lo esperado 🙄',
     ];
-    return Stream.periodic(const Duration(milliseconds: 1600), (step){
+    return Stream.periodic(const Duration(milliseconds: 1200), (step){
       return messages [step];
     }).take(messages.length);
 
@@ -22,22 +22,36 @@ class FullScreenLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('Espere por favor'),
-          const SizedBox(height: 10),
-          const CircularProgressIndicator(strokeWidth: 3),
-          SizedBox(height: 10),
-
-          StreamBuilder(
-            stream: getLoadingMessages(), 
-            builder: (context, snapshot){
-              if (!snapshot.hasData) return const Text('Cargando...');
-              return Text(snapshot.data!);
-            }),
-        ],
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/background2.png'),
+          fit: BoxFit.cover,
+          ),
+      ),
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding:  const EdgeInsets.only(bottom: 40.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Text('Espere por favor', style: TextStyle(
+                color: Colors.white
+              )),
+              const SizedBox(height: 10),
+              const CircularProgressIndicator(strokeWidth: 3, color: Colors.white,),
+              SizedBox(height: 10),
+                
+              StreamBuilder(
+                stream: getLoadingMessages(), 
+                builder: (context, snapshot){
+                  if (!snapshot.hasData) return const Text('Cargando...', style: TextStyle(color: Colors.white),);
+                  return Text(snapshot.data!, style: TextStyle(color: Colors.white),);
+                }),
+            ],
+          ),
+        ),
       ),
     );
   }

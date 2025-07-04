@@ -5,6 +5,8 @@ import 'package:filmora/config/domain/entities/movie.dart';
 import 'package:filmora/config/infrastucture/mappers/movie_mapper.dart';
 import 'package:filmora/config/infrastucture/models/moviedb/moviedb_response.dart';
 
+import '../models/moviedb/movie_details.dart';
+
 class MoviedbDatasource extends MoviesDatasource {
   final dio = Dio(
     BaseOptions(
@@ -29,13 +31,11 @@ class MoviedbDatasource extends MoviesDatasource {
 
   @override
   Future<List<Movie>> getNowPlaying({int page = 1}) async {
-    
-    final response = await dio.get('/movie/now_playing', 
-      queryParameters: {
-        'page': page
-      }
+    final response = await dio.get(
+      '/movie/now_playing',
+      queryParameters: {'page': page},
     );
-    
+
     return _jsonToMovies(response.data);
   }
 
@@ -67,5 +67,19 @@ class MoviedbDatasource extends MoviesDatasource {
     );
 
     return _jsonToMovies(response.data);
+  }
+
+  @override
+  Future<Movie> getMovieById(String id) async {
+    final response = await dio.get('/movie/$id');
+    if ( response.statusCode != 200) throw Exception('Movie with: $id not found');
+
+    final movieDetails = MovieDetails.fromJson( response.data);
+
+    final Movie movie = MovieMapper.movieDetailsToENtity(movieDetails);
+
+    //final Movie movie = MovieMapper
+
+    return movie;
   }
 }

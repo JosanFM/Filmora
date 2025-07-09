@@ -1,7 +1,7 @@
 import 'package:filmora/config/domain/entities/movie.dart';
 import 'package:filmora/config/domain/repository/local_storage_repository.dart';
 
-class LocalStorageRepositoryImpl implements LocalStorageRepository {
+class LocalStorageRepositoryImpl extends LocalStorageRepository {
 
   final LocalStorageRepository datasource;
 

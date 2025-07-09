@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:filmora/config/domain/entities/movie.dart';
 import 'package:filmora/presentation/providers/actors/actors_by_movie_provider.dart';
 import 'package:filmora/presentation/providers/movies/movie_info_provider.dart';
+import 'package:filmora/presentation/providers/storage/local_storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -184,13 +185,13 @@ class _ActorsByMovie extends ConsumerWidget {
   }
 }
 
-class _CustomSliverAppBar extends StatelessWidget {
+class _CustomSliverAppBar extends ConsumerWidget {
   final Movie movie;
 
   const _CustomSliverAppBar({required this.movie});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
     final size = MediaQuery.of(context).size;
 
     return SliverAppBar(
@@ -202,7 +203,7 @@ class _CustomSliverAppBar extends StatelessWidget {
           icon: Icon(Icons.favorite_outline_rounded, size: 35),
           //icon: const Icon( Icons.favorite_rounded, size: 35, color: Colors.red,),
           onPressed: () {
-            //TODO: realizar el toggle
+            ref.watch(localStorageRepositoryProvider).toggleFavorite(movie);
           },
         ),
       ],

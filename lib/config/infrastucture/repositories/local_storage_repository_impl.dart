@@ -1,32 +1,27 @@
+import 'package:filmora/config/domain/datasource/local_storage_datasource.dart';
 import 'package:filmora/config/domain/entities/movie.dart';
 import 'package:filmora/config/domain/repository/local_storage_repository.dart';
 
-class LocalStorageRepositoryImpl extends LocalStorageRepository {
 
-  final LocalStorageRepository datasource;
+class LocalStorageRepositoryImpl extends LocalStorageRepository{
+
+  final LocalStorageDataSource datasource;
 
   LocalStorageRepositoryImpl(this.datasource);
 
-
-
   @override
-  Future<bool> isMovieFavourite(int movieId) {
-    return datasource.isMovieFavourite(movieId);
+  Future<bool> isMovieFavorite(int movieId) {
+    return datasource.isMovieFavorite(movieId);
   }
-
-
 
   @override
   Future<List<Movie>> loadMovies({int limit = 10, int offset = 0}) {
     return datasource.loadMovies(limit: limit, offset: offset);
   }
 
-
-
   @override
-  Future<void> toggleFavorite(Movie movie) async {
+  Future<void> toggleFavorite(Movie movie) {
     return datasource.toggleFavorite(movie);
   }
-  
-  
+
 }

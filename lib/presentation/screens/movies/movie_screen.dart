@@ -5,7 +5,6 @@ import 'package:filmora/presentation/providers/movies/movie_info_provider.dart';
 import 'package:filmora/presentation/providers/storage/local_storage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class MovieScreen extends ConsumerStatefulWidget {
   static const name = 'movie-screen';

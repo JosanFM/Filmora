@@ -1,6 +1,5 @@
 import 'package:filmora/config/domain/entities/movie.dart';
 import 'package:filmora/presentation/delegates/search_movie_delegate.dart';
-import 'package:filmora/presentation/providers/movies/movies_repository_provider.dart';
 import 'package:filmora/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

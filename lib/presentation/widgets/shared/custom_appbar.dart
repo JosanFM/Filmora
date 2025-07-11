@@ -19,51 +19,37 @@ class CustomAppbar extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SizedBox(
           width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-            child: Row(
-              children: [
-                Icon(Icons.movie_outlined, color: colors.primary),
-                const SizedBox(width: 5),
-                Text('Filmora', style: titleStyle),
+          child: Row(
+            children: [
+              Icon(Icons.movie_outlined, color: colors.primary),
+              const SizedBox(width: 5),
+              Text('Cinemapedia', style: titleStyle),
 
-                const Spacer(), // crea un expacio pero todo el posible para separarlo lo máximo que pueda
+              const Spacer(),
 
-                IconButton(
-                  onPressed: () {
-                    //TODO:
-                    final searchedMovies = ref.read(searchedMoviesProvider);
-                    final searchQuery = ref.read(searchQueryProvider);
-                    
-                    //!Opcion previa para que no me de problemas el darle al boton de buscar la primera vez que entro a la app
-                    // if (searchedMovies.isEmpty) {
-                      // Opcional: puedes cargar algo por defecto o mostrar un loader
-                    //   ref
-                    //       .read(searchedMoviesProvider.notifier)
-                   //        .searchMoviesByQuery('');
-                    //   return;
-                    // }
+              IconButton(
+                onPressed: () {
+                  final searchedMovies = ref.read(searchedMoviesProvider);
+                  final searchQuery = ref.read(searchQueryProvider);
 
-                    showSearch<Movie?>(
-                      query: searchQuery,
-                      context: context,
-                      delegate: SearchMovieDelegate(
-                        initialMovies: searchedMovies,
-                        searchMovies: ref
-                            .read(searchedMoviesProvider.notifier)
-                            .searchMoviesByQuery,
-                      ),
-                    ).then((movie) {
-                      if (movie == null) return;
+                  showSearch<Movie?>(
+                    query: searchQuery,
+                    context: context,
+                    delegate: SearchMovieDelegate(
+                      initialMovies: searchedMovies,
+                      searchMovies: ref
+                          .read(searchedMoviesProvider.notifier)
+                          .searchMoviesByQuery,
+                    ),
+                  ).then((movie) {
+                    if (movie == null) return;
 
-                      // ignore: use_build_context_synchronously
-                      context.push('/movie/${movie.id}');
-                    });
-                  },
-                  icon: Icon(Icons.search),
-                ),
-              ],
-            ),
+                    context.push('/home/0/movie/${movie.id}');
+                  });
+                },
+                icon: const Icon(Icons.search),
+              ),
+            ],
           ),
         ),
       ),

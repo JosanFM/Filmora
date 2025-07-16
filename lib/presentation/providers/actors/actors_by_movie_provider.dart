@@ -1,7 +1,7 @@
 
 
 import 'package:filmora/config/domain/entities/actor.dart';
-import 'package:filmora/presentation/providers/actors/actor_repository_provider.dart';
+import 'package:filmora/presentation/providers/actors/actors_repository_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
@@ -12,7 +12,6 @@ final actorsByMovieProvider = StateNotifierProvider<ActorsByMovieNotifier, Map<S
   
   return ActorsByMovieNotifier( getActors: actorsRepository.getActorsByMovie );
 });
-
 
 
 

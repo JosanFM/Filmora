@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:filmora/config/domain/entities/movie.dart';
 import 'package:filmora/config/helpers/human_formats.dart';
+import 'package:filmora/presentation/widgets/movies/movie_rating.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,10 +14,10 @@ class MovieHorizontalListview extends StatefulWidget {
   final VoidCallback? loadNextPage;
 
   const MovieHorizontalListview({
-    super.key, 
-    required this.movies, 
+    super.key,
+    required this.movies,
     this.title, 
-    this.subTitle, 
+    this.subTitle,
     this.loadNextPage
   });
 
@@ -26,19 +27,22 @@ class MovieHorizontalListview extends StatefulWidget {
 
 class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
 
+
   final scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     
-    scrollController.addListener((){
-      if (widget.loadNextPage == null) return;
-      
-      if ( (scrollController.position.pixels +200) >= scrollController.position.maxScrollExtent ) {
+    scrollController.addListener(() {
+      if ( widget.loadNextPage == null ) return;
+
+      if ( (scrollController.position.pixels + 200) >= scrollController.position.maxScrollExtent ) {
         widget.loadNextPage!();
       }
+
     });
+
   }
 
   @override
@@ -47,16 +51,18 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
     super.dispose();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 350,
-      width: double.infinity,
       child: Column(
         children: [
 
-          if( widget.title != null || widget.subTitle != null) 
-            _Title(title: widget.title, subTitle: widget.subTitle),
+          if ( widget.title != null || widget.subTitle != null )
+            _Title(title: widget.title, subTitle: widget.subTitle ),
+
 
           Expanded(
             child: ListView.builder(
@@ -71,61 +77,17 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
           )
 
         ],
-      )
-    );
-  }
-}
-
-
-
-
-
-
-class _Title extends StatelessWidget {
-
-  final String? title;
-  final String? subTitle;
-
-  const _Title({this.title, this.subTitle});
-
-  @override
-  Widget build(BuildContext context) {
-
-    final titleStyle = Theme.of(context).textTheme.titleLarge;
-
-    return Container(
-      padding: const EdgeInsets.only(top:10),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: Row(
-        children: [
-
-          if ( title != null)
-            Text(title!, style: titleStyle,),
-          
-          const Spacer(),
-
-          if ( subTitle != null)
-            FilledButton.tonal(
-              style: const ButtonStyle(visualDensity: VisualDensity.compact), 
-              onPressed: (){}, 
-              child: Text(subTitle!),
-            )
-
-        ],
       ),
     );
   }
 }
 
 
-
-
-
 class _Slide extends StatelessWidget {
 
   final Movie movie;
 
-  const _Slide({required this.movie});
+  const _Slide({ required this.movie });
 
   @override
   Widget build(BuildContext context) {
@@ -133,37 +95,31 @@ class _Slide extends StatelessWidget {
     final textStyles = Theme.of(context).textTheme;
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8),
+      margin: const EdgeInsets.symmetric( horizontal: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //* Imagenes de peliculas
+          
+          //* Imagen
           SizedBox(
             width: 150,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                movie.posterPath,
-                fit: BoxFit.cover,
-                width: 150,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if(loadingProgress != null ) {
-                    return const Padding(
-                      padding:  EdgeInsets.all(8.0),
-                      child: Center(child: CircularProgressIndicator(strokeWidth: 2,)),
-                    );
-                  }
-                  return GestureDetector(
-                    onTap: ()=> context.push('/home/0/movie/${movie.id}'),
-                    child: FadeIn(child: child));
-                },
+              child: GestureDetector(
+                onTap: () => context.push('/home/0/movie/${ movie.id }'),
+                child: FadeInImage(
+                  height: 220,
+                  fit: BoxFit.cover,
+                  placeholder: const AssetImage('assets/loaders/bottle_loader_good.png'), 
+                  image: NetworkImage(movie.posterPath)
+                ),
               ),
             ),
           ),
 
-          SizedBox(height: 5,),
+          const SizedBox(height: 5),
 
-          //*Titulo
+          //* Title
           SizedBox(
             width: 150,
             child: Text(
@@ -174,19 +130,10 @@ class _Slide extends StatelessWidget {
           ),
 
           //* Rating
-          SizedBox(
-            width: 150,
-            child: Row(
-              children: [
-                Icon(Icons.star_half_outlined, color: Colors.yellow.shade800,),
-                const SizedBox(width: 3),
-                Text(movie.voteAverage.toStringAsFixed(1), style: textStyles.bodyMedium?.copyWith(color: Colors.yellow.shade800)),
-                const Spacer(),
-                //Text('${movie.popularity}', style: textStyles.bodySmall)
-                Text(HumanFormats.number(movie.popularity), style: textStyles.bodySmall),
-              ],
-            ),
+          MovieRating(
+            voteAverage: movie.voteAverage
           ),
+
 
         ],
       ),
@@ -194,3 +141,41 @@ class _Slide extends StatelessWidget {
   }
 }
 
+
+
+class _Title extends StatelessWidget {
+
+  final String? title;
+  final String? subTitle;
+
+
+  const _Title({ this.title, this.subTitle});
+
+  @override
+  Widget build(BuildContext context) {
+
+    final titleStyle = Theme.of(context).textTheme.titleLarge;
+
+    return Container(
+      padding: const EdgeInsets.only( top: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+      child: Row(
+        children: [
+          
+          if ( title != null )
+            Text(title!, style: titleStyle ),
+          
+          const Spacer(),
+
+          if ( subTitle != null )
+            FilledButton.tonal(
+              style: const ButtonStyle( visualDensity: VisualDensity.compact ),
+              onPressed: (){}, 
+              child: Text( subTitle! )
+          )
+
+        ],
+      ),
+    );
+  }
+}

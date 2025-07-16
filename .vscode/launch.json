@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+
+    {
+      "name": "Iniciar app Flutter (debug)",
+      "type": "dart",
+      "request": "launch",
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Flutter: Iniciar en modo release",
+      "type": "dart",
+      "request": "launch",
+      "flutterMode": "release"
+    },
+    {
+      "name": "Flutter: Perfil de rendimiento",
+      "type": "dart",
+      "request": "launch",
+      "flutterMode": "profile"
+    }
+  ]
+}

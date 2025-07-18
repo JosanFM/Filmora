@@ -17,16 +17,16 @@ class CustomAppbar extends ConsumerWidget {
     return SafeArea(
       bottom: false,
       child: Padding(
-        padding: const EdgeInsets.symmetric( horizontal: 10 ),
+        padding: const EdgeInsets.symmetric( horizontal: 50 ),
         child: SizedBox(
           width: double.infinity,
           child: Row(
             children: [
               Icon( Icons.movie_outlined, color: colors.primary ),
               const SizedBox( width: 5 ),
-              Text('Cinemapedia', style: titleStyle ),
+              Text('Filmora', style: titleStyle ),
       
-              const Spacer(),
+              
       
               IconButton(onPressed: () {
 

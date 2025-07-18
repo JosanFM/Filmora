@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../providers/providers.dart';
 import '../../widgets/widgets.dart';
@@ -37,6 +38,8 @@ class HomeViewState extends ConsumerState<HomeView> with AutomaticKeepAliveClien
     final topRatedMovies = ref.watch( topRatedMoviesProvider );
     final upcomingMovies = ref.watch( upcomingMoviesProvider );
 
+    
+
     return CustomScrollView(
       slivers: [
 
@@ -60,7 +63,7 @@ class HomeViewState extends ConsumerState<HomeView> with AutomaticKeepAliveClien
                     MovieHorizontalListview(
                       movies: nowPlayingMovies,
                       title: 'En cines',
-                      subTitle: 'Lunes 20',
+                      subTitle: 'Hoy',
                       loadNextPage: () =>ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()
                       
                     ),

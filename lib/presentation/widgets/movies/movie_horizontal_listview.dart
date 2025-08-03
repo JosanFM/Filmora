@@ -1,6 +1,5 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:filmora/config/domain/entities/movie.dart';
-import 'package:filmora/config/helpers/human_formats.dart';
 import 'package:filmora/presentation/widgets/movies/movie_rating.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

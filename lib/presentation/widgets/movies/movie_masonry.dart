@@ -1,7 +1,6 @@
 
 import 'package:filmora/config/domain/entities/movie.dart';
 import 'package:filmora/presentation/widgets/movies/movie_poster_link.dart';
-import 'package:filmora/presentation/widgets/movies/movies_poster_link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
